@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linketinder</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="form-cadastro">
+      <div class="flex-container" style="margin-left: 230px;">
+        <h1>Cadastro Candidato</h1>
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="inputName">Nome Completo</label>
+              <input
+                type="nome"
+                class="inputName form-control"
+                id="inputName"
+                placeholder="Nome"
+                required
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputEmail4">Email</label>
+              <input
+                type="email"
+                class="inputEmail form-control"
+                id="inputEmail"
+                placeholder="Email"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="inputCPF">CPF</label>
+              <input
+                type="text"
+                class="inputCPF form-control"
+                id="inputCPF"
+                placeholder="XXX.XXX.XXX-XX"
+                required
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputAddress">Telefone</label>
+              <input
+                type="text"
+                class="inputTelefone form-control"
+                id="inputTelefone"
+                placeholder="(XX) XXXXX-XXXX"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="inputEstado">Estado</label>
+              <input
+                type="text"
+                class="inputEstado form-control"
+                id="inputEstado"
+              />
+            </div>
+
+            <div class="form-group col-md-3">
+              <label for="inputPais">País</label>
+              <input
+                type="text"
+                class="inputPais form-control"
+                id="inputPais"
+              />
+            </div>
+            <div class="form-group col-md-2">
+              <label for="inputCEP">CEP</label>
+              <input type="text" class="form-control" id="inputCEP" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="descricao">Descrição</label>
+              <br />
+              <input class="descricao" type="text" />
+            </div>
+          </div>
+          <label for="competencias">Competências</label>
+          <br />
+          <form class="formcompetenciasNecessarias">
+            <input
+              class="checkboxJava"
+              type="checkbox"
+              name="opcao"
+              value="Java"
+            />
+            Java
+            <input
+              class="checkboxGroovy"
+              type="checkbox"
+              name="opcao"
+              value="Groovy"
+            />
+            Groovy
+            <input
+              class="checkboxSpring"
+              type="checkbox"
+              name="opcao"
+              value="Spring"
+            />
+            Spring
+            <input
+              class="checkboxJavaScript"
+              type="checkbox"
+              name="opcao"
+              value="JavaScript"
+            />
+            JavaScript
+            <input
+              class="checkboxPython"
+              type="checkbox"
+              name="opcao"
+              value="Python"
+            />
+            Python
+            <input
+              class="checkboxMysql"
+              type="checkbox"
+              name="opcao"
+              value="MySQL"
+            />
+            MySQL
+          </form>
+          <button class="button" onclick="criaCandidato()">
+            Cadastrar
+          </button>
+          <a class="btn btn-1" href="/index.html">Voltar</a>
+        </form>
+      </div>
+    </div>
+    <script src="/script.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
