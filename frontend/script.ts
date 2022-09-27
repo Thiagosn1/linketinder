@@ -236,3 +236,85 @@ function listaEmpresas() {
     console.log(empr);
   }
 }
+
+function validaDadosCandidato(){
+  const validaCPF = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/
+  const validaEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+  const validaTelefone =
+
+  var stringErro = " "
+
+  if (!validaCPF.test(inputCPF.value)){
+      stringErro = stringErro + "Insira um CPF válido!"
+  }
+
+  if (!validaEmail.test(inputEmail.value)){
+      stringErro = stringErro + " Insira um Email válido!"
+  }
+
+  if (!validaTelefone.test(inputTelefone.value)){
+      stringErro = stringErro + " Insira um Telefone válido!"
+  }
+
+  if (!(checkboxGroovy.checked || checkboxJava.checked || checkboxJavaScript.checked || checkboxMysql.checked || checkboxSpring.checked || checkboxPython.checked)){
+      stringErro = stringErro + " Selecione alguma competência!"
+  }
+
+  erro.innerHTML = stringErro
+
+  return (validaCPF.test(inputCPF.value) &&
+      validaEmail.test(inputEmail.value) &&
+      validaTelefone.test(inputTelefone.value) &&
+      (checkboxGroovy.checked || checkboxJava.checked || checkboxJavaScript.checked || checkboxMysql.checked || checkboxSpring.checked || checkboxPython.checked)
+  )
+}
+
+function cadastraCandidato(){
+  if(validaDadosCandidato()){
+      erro.style.display = "none"
+      criaCandidato()
+  }else{
+      erro.style.display = "grid"
+  }
+}
+
+function validaDadosEmpresa(){
+  const validaCNPJ = /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/
+  const validaCEP = /^\d{2}\.?\d{3}\-\d{3}/
+  const validaEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+
+  var stringErro = " "
+
+  if (!validaCNPJ.test(inputCNPJ.value)){
+      stringErro = stringErro + "Insira um CNPJ válido!"
+  }
+
+  if (!validaCEP.test(inputCEP.value)){
+      stringErro = stringErro + " Insira um CEP válido!"
+  }
+
+  if (!validaEmail.test(inputEmail.value)){
+      stringErro = stringErro + " Insira um Email válido!"
+  }
+
+  if (!(checkboxGroovy.checked || checkboxJava.checked || checkboxJavaScript.checked || checkboxMysql.checked || checkboxSpring.checked || checkboxPython.checked)){
+      stringErro = stringErro + " Selecione alguma competência necessária!"
+  }
+
+  erro.innerHTML = stringErro
+
+  return (validaCNPJ.test(inputCNPJ.value) &&
+          validaCEP.test(inputCEP.value) &&
+          validaEmail.test(inputEmail.value) &&
+          (checkboxGroovy.checked || checkboxJava.checked || checkboxJavaScript.checked || checkboxMysql.checked || checkboxSpring.checked || checkboxPython.checked)
+  )
+}
+
+function cadastraEmpresa(){
+  if(validaDadosEmpresa()){
+      erro.style.display = "none"
+      criaEmpresa()
+  }else{
+      erro.style.display = "grid"
+  }
+}
