@@ -5,13 +5,19 @@ while (rodar) {
 
     println "-----------------------------"
     println "         LINKETINDER         "
-    println "1 - ADICIONAR EMPRESAS"
-    println "2 - ADICIONAR CANDIDATOS"
-    println "3 - LISTAR EMPRESAS"
-    println "4 - LISTAR CANDIDATOS"
-    println "5 - ADICIONAR NOVA EMPRESA"
-    println "6 - ADICIONAR NOVO CANDIDATO"
-    println "7 - SAIR"
+    println "1 - ADICIONAR EMPRESA"
+    println "2 - ATUALIZAR EMPRESA"
+    println "3 - DELETAR EMPRESA"
+    println "4 - LISTAR EMPRESAS"
+    println "5 - ADICIONAR CANDIDATO"
+    println "6 - ATUALIZAR CANDIDATO"
+    println "7 - DELETAR CANDIDATO"
+    println "8 - LISTAR CANDIDATOS"
+    println "9 - ADICIONAR VAGA"
+    println "10 - ATUALIZAR VAGA"
+    println "11 - DELETAR VAGA"
+    println "12 - LISTAR VAGAS"
+    println "13 - SAIR"
     println "-----------------------------"
     println()
 
@@ -20,38 +26,45 @@ while (rodar) {
 
     switch (opcao) {
         case 1:
-            Empresa.adicionaEmpresas()
-            println()
-            println "Empresas adicionadas"
-            println()
+            Conexao.adicionaEmpresa()
             break
         case 2:
-            Candidato.adicionaCandidatos()
-            println()
-            println "Candidatos adicionados"
-            println()
+            Conexao.atualizaEmpresa()
             break
         case 3:
-            Empresa.listaEmpresas()
+            Conexao.deletaEmpresa()
             break
         case 4:
-            Candidato.listaCandidatos()
+            Conexao.listaEmpresas()
             break
         case 5:
-            Empresa.adicionaNovaEmpresa()
-            println()
-            println "Nova empresa adicionada"
-            println()
+            Conexao.adicionaCandidato()
             break
         case 6:
-            Candidato.adicionaNovoCandidato()
-            println()
-            println "Novo candidato adicionado"
-            println()
+            Conexao.atualizaCandidato()
             break
         case 7:
+            Conexao.deletaCandidato()
+            break
+        case 8:
+            Conexao.listaCandidatos()
+            break
+        case 9:
+            Conexao.adicionaVaga()
+            break
+        case 10:
+            Conexao.atualizaVaga()
+            break
+        case 11:
+            Conexao.deletaVaga()
+            break
+        case 12:
+            Conexao.listaVagas()
+            break
+        case 13:
             rodar = false
             println "SAINDO..."
             break
     }
 }
+
