@@ -7,5 +7,4 @@ class Empresa {
     String cep
     String descricaoEmpresa
     List<String> competencias
-
 }

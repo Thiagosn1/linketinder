@@ -7,5 +7,4 @@ class Candidato {
     String cep
     String descricaoPessoal
     List<String> competencias
-
 }

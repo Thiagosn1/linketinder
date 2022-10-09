@@ -13,11 +13,15 @@ while (rodar) {
     println "6 - ATUALIZAR CANDIDATO"
     println "7 - DELETAR CANDIDATO"
     println "8 - LISTAR CANDIDATOS"
-    println "9 - ADICIONAR VAGA"
-    println "10 - ATUALIZAR VAGA"
-    println "11 - DELETAR VAGA"
-    println "12 - LISTAR VAGAS"
-    println "13 - SAIR"
+    println "9 - ADICIONAR COMPETÊNCIA"
+    println "10 - ATUALIZAR COMPETÊNCIA"
+    println "11 - DELETAR COMPETÊNCIA"
+    println "12 - LISTAR COMPETÊNCIAS"
+    println "13 - ADICIONAR VAGA"
+    println "14 - ATUALIZAR VAGA"
+    println "15 - DELETAR VAGA"
+    println "16 - LISTAR VAGAS"
+    println "17 - SAIR"
     println "-----------------------------"
     println()
 
@@ -50,21 +54,32 @@ while (rodar) {
             Conexao.listaCandidatos()
             break
         case 9:
-            Conexao.adicionaVaga()
+            Conexao.adicionaCompetencia()
             break
         case 10:
-            Conexao.atualizaVaga()
+            Conexao.atualizaCompetencia()
             break
         case 11:
-            Conexao.deletaVaga()
+            Conexao.deletaCompetencia()
             break
         case 12:
-            Conexao.listaVagas()
+            Conexao.listaCompetencias()
             break
         case 13:
+            Conexao.adicionaVaga()
+            break
+        case 14:
+            Conexao.atualizaVaga()
+            break
+        case 15:
+            Conexao.deletaVaga()
+            break
+        case 16:
+            Conexao.listaVagas()
+            break
+        case 17:
             rodar = false
             println "SAINDO..."
             break
     }
 }
-
