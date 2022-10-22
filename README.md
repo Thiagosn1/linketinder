@@ -1,7 +1,10 @@
 #  Linketinder
+<img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
 Sistema de contratação de funcionários, inspirado no Linkedin e no Tinder.
 
 A ideia é combinar a funcionalidade de Match do Tinder, com o campo individual de competências visto no Linkedin.
+
+
 
 ## Backend
 
@@ -9,6 +12,8 @@ A ideia é combinar a funcionalidade de Match do Tinder, com o campo individual 
 ![Apache Groovy](https://img.shields.io/badge/Groovy-4298B8.svg?style=for-the-badge&logo=Apache+Groovy&logoColor=white)
 
 ![Postgres](https://img.shields.io/badge/postgresql-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
+<img src="https://img.shields.io/badge/TESTES%20UNIT%C3%81RIOS-JUNIT-blue?style=for-the-badge"/>
 
 ## Frontend
 
