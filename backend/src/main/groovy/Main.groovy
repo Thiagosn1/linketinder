@@ -30,52 +30,52 @@ while (rodar) {
 
     switch (opcao) {
         case 1:
-            Conexao.adicionaEmpresa()
+            Empresa.adicionaEmpresa()
             break
         case 2:
-            Conexao.atualizaEmpresa()
+            Empresa.atualizaEmpresa()
             break
         case 3:
-            Conexao.deletaEmpresa()
+            Empresa.deletaEmpresa()
             break
         case 4:
-            Conexao.listaEmpresas()
+            Empresa.listaEmpresas()
             break
         case 5:
-            Conexao.adicionaCandidato()
+            Candidato.adicionaCandidato()
             break
         case 6:
-            Conexao.atualizaCandidato()
+            Candidato.atualizaCandidato()
             break
         case 7:
-            Conexao.deletaCandidato()
+            Candidato.deletaCandidato()
             break
         case 8:
-            Conexao.listaCandidatos()
+            Candidato.listaCandidatos()
             break
         case 9:
-            Conexao.adicionaCompetencia()
+            Competencia.adicionaCompetencia()
             break
         case 10:
-            Conexao.atualizaCompetencia()
+            Competencia.atualizaCompetencia()
             break
         case 11:
-            Conexao.deletaCompetencia()
+            Competencia.deletaCompetencia()
             break
         case 12:
-            Conexao.listaCompetencias()
+            Competencia.listaCompetencias()
             break
         case 13:
-            Conexao.adicionaVaga()
+            Vaga.adicionaVaga()
             break
         case 14:
-            Conexao.atualizaVaga()
+            Vaga.atualizaVaga()
             break
         case 15:
-            Conexao.deletaVaga()
+            Vaga.deletaVaga()
             break
         case 16:
-            Conexao.listaVagas()
+            Vaga.listaVagas()
             break
         case 17:
             rodar = false
