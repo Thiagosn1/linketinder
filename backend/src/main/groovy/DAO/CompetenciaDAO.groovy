@@ -1,9 +1,19 @@
+package DAO
+
+import Classes.Competencia
 import groovy.sql.Sql
 
-class Competencia {
-    static void adicionaCompetencia() {
+class CompetenciaDAO {
+
+    Competencia competencia = new Competencia()
+
+    void adicionaCompetencia() {
         def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-        def sqlInsert = "INSERT INTO competencia(descricao) VALUES ('GIT')"
+
+        print "Digite o nome da competencia: "
+        competencia.descricao = System.in.newReader().readLine()
+
+        def sqlInsert = "INSERT INTO competencia(descricao) VALUES ($competencia.descricao)"
 
         sql.execute(sqlInsert)
         sql.close()
@@ -13,9 +23,19 @@ class Competencia {
         println()
     }
 
-    static void atualizaCompetencia() {
+    void atualizaCompetencia() {
         def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-        def sqlUpdate = "UPDATE competencia SET descricao='Gitflow' WHERE ID = 9"
+
+        listaCompetencias()
+        println()
+
+        print "Digite o ID da competência que deseja atualizar: "
+        def id = System.in.newReader().readLine()
+
+        print "Digite o novo nome da competência: "
+        competencia.descricao = System.in.newReader().readLine()
+
+        def sqlUpdate = "UPDATE competencia SET descricao= $competencia.descricao WHERE ID = $id"
 
         sql.execute(sqlUpdate)
         sql.close()
@@ -27,7 +47,11 @@ class Competencia {
 
     static void deletaCompetencia() {
         def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-        def sqlDelete = "DELETE FROM competencia WHERE ID = 9"
+
+        print "Digite o ID da competência que deseja remover: "
+        def id = System.in.newReader().readLine()
+
+        def sqlDelete = "DELETE FROM competencia WHERE ID = $id"
 
         sql.execute(sqlDelete)
         sql.close()

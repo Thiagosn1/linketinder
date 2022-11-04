@@ -1,3 +1,8 @@
+import DAO.CandidatoDAO
+import DAO.CompetenciaDAO
+import DAO.EmpresaDAO
+import DAO.VagaDAO
+
 int opcao
 boolean rodar = true
 
@@ -30,52 +35,52 @@ while (rodar) {
 
     switch (opcao) {
         case 1:
-            Empresa.adicionaEmpresa()
+            EmpresaDAO.adicionaEmpresa()
             break
         case 2:
-            Empresa.atualizaEmpresa()
+            EmpresaDAO.atualizaEmpresa()
             break
         case 3:
-            Empresa.deletaEmpresa()
+            EmpresaDAO.deletaEmpresa()
             break
         case 4:
-            Empresa.listaEmpresas()
+            EmpresaDAO.listaEmpresas()
             break
         case 5:
-            Candidato.adicionaCandidato()
+            CandidatoDAO.adicionaCandidato()
             break
         case 6:
-            Candidato.atualizaCandidato()
+            CandidatoDAO.atualizaCandidato()
             break
         case 7:
-            Candidato.deletaCandidato()
+            CandidatoDAO.deletaCandidato()
             break
         case 8:
-            Candidato.listaCandidatos()
+            CandidatoDAO.listaCandidatos()
             break
         case 9:
-            Competencia.adicionaCompetencia()
+            CompetenciaDAO.adicionaCompetencia()
             break
         case 10:
-            Competencia.atualizaCompetencia()
+            CompetenciaDAO.atualizaCompetencia()
             break
         case 11:
-            Competencia.deletaCompetencia()
+            CompetenciaDAO.deletaCompetencia()
             break
         case 12:
-            Competencia.listaCompetencias()
+            CompetenciaDAO.listaCompetencias()
             break
         case 13:
-            Vaga.adicionaVaga()
+            VagaDAO.adicionaVaga()
             break
         case 14:
-            Vaga.atualizaVaga()
+            VagaDAO.atualizaVaga()
             break
         case 15:
-            Vaga.deletaVaga()
+            VagaDAO.deletaVaga()
             break
         case 16:
-            Vaga.listaVagas()
+            VagaDAO.listaVagas()
             break
         case 17:
             rodar = false
