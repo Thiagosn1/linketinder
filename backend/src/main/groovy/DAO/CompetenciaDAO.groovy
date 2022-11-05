@@ -5,10 +5,11 @@ import groovy.sql.Sql
 
 class CompetenciaDAO {
 
+    def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+
     Competencia competencia = new Competencia()
 
     void adicionaCompetencia() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         print "Digite o nome da competencia: "
         competencia.descricao = System.in.newReader().readLine()
@@ -24,7 +25,6 @@ class CompetenciaDAO {
     }
 
     void atualizaCompetencia() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         listaCompetencias()
         println()
@@ -45,8 +45,7 @@ class CompetenciaDAO {
         println()
     }
 
-    static void deletaCompetencia() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+     void deletaCompetencia() {
 
         print "Digite o ID da competência que deseja remover: "
         def id = System.in.newReader().readLine()
@@ -61,12 +60,11 @@ class CompetenciaDAO {
         println()
     }
 
-    static void listaCompetencias() {
+    void listaCompetencias() {
 
         println()
         println 'Lista de Competencias'
 
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
         sql.eachRow("SELECT * FROM competencia") { rs ->
             println "Descrição: " + (rs.descricao)
             println()

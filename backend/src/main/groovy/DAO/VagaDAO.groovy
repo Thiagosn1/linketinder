@@ -5,11 +5,11 @@ import Classes.Vaga
 
 class VagaDAO {
 
+    def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+
     Vaga vaga = new Vaga()
 
     void adicionaVaga() {
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         print "Digite o nome da vaga: "
         vaga.nome = System.in.newReader().readLine()
@@ -31,7 +31,6 @@ class VagaDAO {
     }
 
     void atualizaVaga() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         listaVagas()
         println()
@@ -58,8 +57,7 @@ class VagaDAO {
         println()
     }
 
-    static void deletaVaga() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+    void deletaVaga() {
 
         listaVagas()
         println()
@@ -77,13 +75,11 @@ class VagaDAO {
         println()
     }
 
-    static void listaVagas() {
+    void listaVagas() {
 
         println()
         println 'Lista de Vagas'
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
+        
         sql.eachRow("SELECT * FROM vaga") { rs ->
             println "Nome: " + (rs.descricao)
             println "Descrição: " + (rs.descricao)

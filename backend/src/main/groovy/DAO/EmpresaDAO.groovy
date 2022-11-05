@@ -5,10 +5,11 @@ import groovy.sql.Sql
 
 class EmpresaDAO {
 
+    def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+
     Empresa empresa = new Empresa()
 
     void adicionaEmpresa() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         print "Digite o nome da empresa: "
         empresa.nome = System.in.newReader().readLine()
@@ -36,7 +37,6 @@ class EmpresaDAO {
     }
 
     void atualizaEmpresa() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         listaEmpresas()
         println()
@@ -62,7 +62,6 @@ class EmpresaDAO {
     }
 
     void deletaEmpresa() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         listaEmpresas()
         println()
@@ -80,12 +79,11 @@ class EmpresaDAO {
         println()
     }
 
-    static void listaEmpresas() {
+    void listaEmpresas() {
 
         println()
         println 'Lista de Empresas'
 
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
         sql.eachRow("SELECT * FROM empresa") { rs ->
             println "Nome: " + (rs.nome)
             println "Descrição: " + (rs.descricaoPessoal)

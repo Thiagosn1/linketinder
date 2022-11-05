@@ -1,13 +1,15 @@
 package DAO
 
+
 import groovy.sql.Sql
 import Classes.Candidato
 class CandidatoDAO {
 
+    def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+
     Candidato candidato = new Candidato()
 
     void adicionaCandidato() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         print "Digite o nome do candidato: "
         candidato.nome = System.in.newReader().readLine()
@@ -39,7 +41,6 @@ class CandidatoDAO {
     }
 
     void atualizaCandidato() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         listaCandidatos()
         println()
@@ -65,7 +66,6 @@ class CandidatoDAO {
     }
 
     void deletaCandidato() {
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         print "Digite o ID do candidato que deseja atualizar: "
         def id = System.in.newReader().readLine()
@@ -85,7 +85,6 @@ class CandidatoDAO {
         println()
         println 'Lista de Candidatos'
 
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
         sql.eachRow("SELECT * FROM candidato") { rs ->
             println "Nome: " + (rs.nome)
             println "Descrição: " + (rs.descricaoPessoal)
