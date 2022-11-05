@@ -32,12 +32,15 @@ class CandidatoDAO {
 
         def sqlInsert = "INSERT INTO candidato(nome, sobrenome, dt_nasc, email, cpf, pais, cep, descricaoPessoal, senha) VALUES ($candidato.nome, $candidato.sobrenome, $candidato.dt_nasc, '$candidato.email, $candidato.cpf, $candidato.pais, $candidato.cep, $candidato.descricaoPessoal, $candidato.senha)"
 
-        sql.execute(sqlInsert)
+        try {
+            sql.execute(sqlInsert)
+            sql.commit()
+            println("Candidato adicionado")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao adicionar candidato")
+        }
         sql.close()
-
-        println()
-        println 'Candidato adicionado'
-        println()
     }
 
     void atualizaCandidato() {
@@ -57,12 +60,15 @@ class CandidatoDAO {
 
         def sqlUpdate = "UPDATE candidato SET email = $candidato.email, descricaoPessoal = $candidato.descricaoPessoal, senha = $candidato.senha  WHERE ID = $id"
 
-        sql.execute(sqlUpdate)
+        try {
+            sql.execute(sqlUpdate)
+            sql.commit()
+            println("Candidato atualizado")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao atualizar candidato")
+        }
         sql.close()
-
-        println()
-        println 'Candidato atualizado'
-        println()
     }
 
     void deletaCandidato() {
@@ -72,12 +78,15 @@ class CandidatoDAO {
 
         def sqlDelete = "DELETE FROM candidato WHERE ID = $id"
 
-        sql.execute(sqlDelete)
+        try {
+            sql.execute(sqlDelete)
+            sql.commit()
+            println("Candidato removido")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao remover candidato")
+        }
         sql.close()
-
-        println()
-        println 'Candidato removido'
-        println()
     }
 
     void listaCandidatos() {
