@@ -28,12 +28,15 @@ class EmpresaDAO {
 
         def sqlInsert = "INSERT INTO empresa(nome, cnpj, emailCorporativo, pais, cep, descricao, senha) VALUES ($empresa.nome, $empresa.cnpj, $empresa.email, $empresa.pais, $empresa.cep, $empresa.descricao, $empresa.senha)"
 
-        sql.execute(sqlInsert)
+        try {
+            sql.execute(sqlInsert)
+            sql.commit()
+            println("Empresa adicionada")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao adicionar empresa")
+        }
         sql.close()
-
-        println()
-        println 'Empresa adicionada'
-        println()
     }
 
     void atualizaEmpresa() {
@@ -53,12 +56,15 @@ class EmpresaDAO {
 
         def sqlUpdate = "UPDATE empresa SET nome= $empresa.nome, emailcorporativo = $empresa.email, senha = $empresa.senha WHERE ID = $id"
 
-        sql.execute(sqlUpdate)
+        try {
+            sql.execute(sqlUpdate)
+            sql.commit()
+            println("Empresa atualizada")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao atualizar empresa")
+        }
         sql.close()
-
-        println()
-        println 'Empresa atualizada'
-        println()
     }
 
     void deletaEmpresa() {
@@ -71,12 +77,15 @@ class EmpresaDAO {
 
         def sqlDelete = "DELETE FROM empresa WHERE ID = $id"
 
-        sql.execute(sqlDelete)
+        try {
+            sql.execute(sqlDelete)
+            sql.commit()
+            println("Empresa removida")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao remover empresa")
+        }
         sql.close()
-
-        println()
-        println 'Empresa removida'
-        println()
     }
 
     void listaEmpresas() {

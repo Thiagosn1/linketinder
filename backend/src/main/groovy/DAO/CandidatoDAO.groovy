@@ -1,8 +1,8 @@
 package DAO
 
-
 import groovy.sql.Sql
 import Classes.Candidato
+
 class CandidatoDAO {
 
     def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')

@@ -16,12 +16,15 @@ class CompetenciaDAO {
 
         def sqlInsert = "INSERT INTO competencia(descricao) VALUES ($competencia.descricao)"
 
-        sql.execute(sqlInsert)
+        try {
+            sql.execute(sqlInsert)
+            sql.commit()
+            println("Competência adicionada")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao adicionar competência")
+        }
         sql.close()
-
-        println()
-        println 'Competência adicionada'
-        println()
     }
 
     void atualizaCompetencia() {
@@ -37,12 +40,15 @@ class CompetenciaDAO {
 
         def sqlUpdate = "UPDATE competencia SET descricao= $competencia.descricao WHERE ID = $id"
 
-        sql.execute(sqlUpdate)
+        try {
+            sql.execute(sqlUpdate)
+            sql.commit()
+            println("Competência atualizada")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao atualizar competência")
+        }
         sql.close()
-
-        println()
-        println 'Competência atualizada'
-        println()
     }
 
      void deletaCompetencia() {
@@ -52,12 +58,15 @@ class CompetenciaDAO {
 
         def sqlDelete = "DELETE FROM competencia WHERE ID = $id"
 
-        sql.execute(sqlDelete)
+        try {
+            sql.execute(sqlDelete)
+            sql.commit()
+            println("Competência removida")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao remover competência")
+        }
         sql.close()
-
-        println()
-        println 'Competência removida'
-        println()
     }
 
     void listaCompetencias() {

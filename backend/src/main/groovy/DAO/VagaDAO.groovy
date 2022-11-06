@@ -22,12 +22,15 @@ class VagaDAO {
 
         def sqlInsert = "INSERT INTO vaga(nome,descricao, localvaga, idempresa) VALUES ($vaga.nome,$vaga.descricao, $vaga.localVaga, $vaga.idEmpresa)"
 
-        sql.execute(sqlInsert)
+        try {
+            sql.execute(sqlInsert)
+            sql.commit()
+            println("Vaga adicionada")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao adicionar vaga")
+        }
         sql.close()
-
-        println()
-        println 'Vaga adicionada'
-        println()
     }
 
     void atualizaVaga() {
@@ -49,12 +52,15 @@ class VagaDAO {
 
         def sqlUpdate = "UPDATE vaga SET nome = $vaga.nome, descricao = $vaga.descricao, localVaga = $vaga.localVaga WHERE ID = $id"
 
-        sql.execute(sqlUpdate)
+        try {
+            sql.execute(sqlUpdate)
+            sql.commit()
+            println("Vaga atualizada")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao atualizar vaga")
+        }
         sql.close()
-
-        println()
-        println 'Vaga atualizada'
-        println()
     }
 
     void deletaVaga() {
@@ -67,12 +73,15 @@ class VagaDAO {
 
         def sqlDelete = "DELETE FROM vaga WHERE ID = $id"
 
-        sql.execute(sqlDelete)
+        try {
+            sql.execute(sqlDelete)
+            sql.commit()
+            println("Vaga removida")
+        } catch(Exception ex) {
+            sql.rollback()
+            println("Erro ao remover vaga")
+        }
         sql.close()
-
-        println()
-        println 'Vaga removida'
-        println()
     }
 
     void listaVagas() {
@@ -86,7 +95,6 @@ class VagaDAO {
             println "Local da Vaga: " + (rs.localVaga)
             println()
         }
-
         sql.close()
     }
 }
