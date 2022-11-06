@@ -3,13 +3,15 @@ package DAO
 import Classes.Empresa
 import groovy.sql.Sql
 
+import java.sql.SQLException
+
 class EmpresaDAO {
 
-    def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+    static void adicionaEmpresa() {
 
-    Empresa empresa = new Empresa()
+        Empresa empresa = new Empresa()
 
-    void adicionaEmpresa() {
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         print "Digite o nome da empresa: "
         empresa.nome = System.in.newReader().readLine()
@@ -30,22 +32,20 @@ class EmpresaDAO {
 
         try {
             sql.execute(sqlInsert)
-            sql.commit()
             println("Empresa adicionada")
-        } catch(Exception ex) {
-            sql.rollback()
-            println("Erro ao adicionar empresa")
+        } catch (SQLException ex) {
+            println("Erro ao adicionar empresa" + ex)
         }
         sql.close()
     }
 
-    void atualizaEmpresa() {
+    static void atualizaEmpresa() {
+        Empresa empresa = new Empresa()
 
-        listaEmpresas()
-        println()
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
-        print "Digite o ID da empresa que deseja atualizar: "
-        def id = System.in.newReader().readLine()
+        print "Digite o nome da empresa que deseja atualizar: "
+        def nome = System.in.newReader().readLine()
 
         print "Digite o novo nome da empresa: "
         empresa.nome = System.in.newReader().readLine()
@@ -54,44 +54,41 @@ class EmpresaDAO {
         print "Digite a senha da empresa: "
         empresa.senha = System.in.newReader().readLine()
 
-        def sqlUpdate = "UPDATE empresa SET nome= $empresa.nome, emailcorporativo = $empresa.email, senha = $empresa.senha WHERE ID = $id"
+        def sqlUpdate = "UPDATE empresa SET nome= $empresa.nome, emailcorporativo = $empresa.email, senha = $empresa.senha WHERE nome = $nome"
 
         try {
             sql.execute(sqlUpdate)
-            sql.commit()
             println("Empresa atualizada")
-        } catch(Exception ex) {
-            sql.rollback()
-            println("Erro ao atualizar empresa")
+        } catch (SQLException ex) {
+            println("Erro ao atualizar empresa " + ex)
         }
         sql.close()
     }
 
-    void deletaEmpresa() {
+    static void deletaEmpresa() {
 
-        listaEmpresas()
-        println()
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
-        print "Digite o ID da empresa que deseja remover: "
-        def id = System.in.newReader().readLine()
+        print "Digite o nome da empresa que deseja remover: "
+        def nome = System.in.newReader().readLine()
 
-        def sqlDelete = "DELETE FROM empresa WHERE ID = $id"
+        def sqlDelete = "DELETE FROM empresa WHERE nome = $nome"
 
         try {
             sql.execute(sqlDelete)
-            sql.commit()
             println("Empresa removida")
-        } catch(Exception ex) {
-            sql.rollback()
-            println("Erro ao remover empresa")
+        } catch (SQLException ex) {
+            println("Erro ao remover empresa " + ex)
         }
         sql.close()
     }
 
-    void listaEmpresas() {
+    static void listaEmpresas() {
 
         println()
         println 'Lista de Empresas'
+
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         sql.eachRow("SELECT * FROM empresa") { rs ->
             println "Nome: " + (rs.nome)

@@ -2,14 +2,15 @@ package DAO
 
 import groovy.sql.Sql
 import Classes.Candidato
+import java.sql.SQLException
 
 class CandidatoDAO {
 
-    def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+    static void adicionaCandidato() {
 
-    Candidato candidato = new Candidato()
+        Candidato candidato = new Candidato()
 
-    void adicionaCandidato() {
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         print "Digite o nome do candidato: "
         candidato.nome = System.in.newReader().readLine()
@@ -34,22 +35,20 @@ class CandidatoDAO {
 
         try {
             sql.execute(sqlInsert)
-            sql.commit()
             println("Candidato adicionado")
-        } catch(Exception ex) {
-            sql.rollback()
-            println("Erro ao adicionar candidato")
+        } catch (SQLException ex) {
+            println("Erro ao adicionar candidato" + ex)
         }
         sql.close()
     }
 
-    void atualizaCandidato() {
+    static void atualizaCandidato() {
+        Candidato candidato = new Candidato()
 
-        listaCandidatos()
-        println()
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
-        print "Digite o ID do candidato que deseja atualizar: "
-        def id = System.in.newReader().readLine()
+        print "Digite o nome do candidato que deseja atualizar: "
+        def nome = System.in.newReader().readLine()
 
         print "Digite o novo email da candidato: "
         candidato.email = System.in.newReader().readLine()
@@ -58,48 +57,50 @@ class CandidatoDAO {
         print "Digite a nova senha da candidato: "
         candidato.senha = System.in.newReader().readLine()
 
-        def sqlUpdate = "UPDATE candidato SET email = $candidato.email, descricaoPessoal = $candidato.descricaoPessoal, senha = $candidato.senha  WHERE ID = $id"
+        def sqlUpdate = "UPDATE candidato SET email = $candidato.email, descricaoPessoal = $candidato.descricaoPessoal, senha = $candidato.senha  WHERE nome = $nome"
 
         try {
             sql.execute(sqlUpdate)
-            sql.commit()
             println("Candidato atualizado")
-        } catch(Exception ex) {
-            sql.rollback()
-            println("Erro ao atualizar candidato")
+        } catch (SQLException ex) {
+            println("Erro ao atualizar candidato" + ex)
         }
         sql.close()
     }
 
-    void deletaCandidato() {
+    static void deletaCandidato() {
 
-        print "Digite o ID do candidato que deseja atualizar: "
-        def id = System.in.newReader().readLine()
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
-        def sqlDelete = "DELETE FROM candidato WHERE ID = $id"
+        print "Digite o nome do candidato que deseja remover: "
+        def nome = System.in.newReader().readLine()
+
+        def sqlDelete = "DELETE FROM candidato WHERE nome = $nome"
 
         try {
             sql.execute(sqlDelete)
-            sql.commit()
             println("Candidato removido")
-        } catch(Exception ex) {
-            sql.rollback()
-            println("Erro ao remover candidato")
+        } catch (SQLException ex) {
+            println("Erro ao remover candidato " + ex)
         }
         sql.close()
     }
 
-    void listaCandidatos() {
+    static void listaCandidatos() {
+
 
         println()
         println 'Lista de Candidatos'
 
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+
         sql.eachRow("SELECT * FROM candidato") { rs ->
             println "Nome: " + (rs.nome)
+            println "Sobrenome: " + (rs.sobrenome)
             println "Descrição: " + (rs.descricaoPessoal)
             println "Email: " + (rs.email)
             println "País: " + (rs.pais)
-            println("Competências: ")
+            println "Competências: "
             println()
         }
         sql.close()
