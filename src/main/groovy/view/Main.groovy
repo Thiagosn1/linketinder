@@ -1,3 +1,5 @@
+package view
+
 import model.DAO.CandidatoDAO
 import model.DAO.CompetenciaDAO
 import model.DAO.EmpresaDAO

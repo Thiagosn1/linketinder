@@ -92,7 +92,7 @@ class EmpresaDAO {
 
         sql.eachRow("SELECT * FROM empresa") { rs ->
             println "Nome: " + (rs.nome)
-            println "Descrição: " + (rs.descricaoPessoal)
+            println "Descrição: " + (rs.descricao)
             println "País: " + (rs.pais)
             println("Competências: ")
             println()

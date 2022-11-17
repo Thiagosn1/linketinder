@@ -10,7 +10,7 @@ class CandidatoDAO {
 
         Candidato candidato = new Candidato()
 
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+        println()
 
         print "Digite o nome do candidato: "
         candidato.nome = System.in.newReader().readLine()
@@ -31,7 +31,9 @@ class CandidatoDAO {
         print "Digite a senha do candidato: "
         candidato.senha = System.in.newReader().readLine()
 
-        def sqlInsert = "INSERT INTO candidato(nome, sobrenome, dt_nasc, email, cpf, pais, cep, descricaoPessoal, senha) VALUES ($candidato.nome, $candidato.sobrenome, $candidato.dt_nasc, '$candidato.email, $candidato.cpf, $candidato.pais, $candidato.cep, $candidato.descricaoPessoal, $candidato.senha)"
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+
+        def sqlInsert = "INSERT INTO candidato(nome, sobrenome, dt_nasc, email, cpf, pais, cep, descricaoPessoal, senha) VALUES ($candidato.nome, $candidato.sobrenome, $candidato.dt_nasc, $candidato.email, $candidato.cpf, $candidato.pais, $candidato.cep, $candidato.descricaoPessoal, $candidato.senha)"
 
         try {
             sql.execute(sqlInsert)
@@ -45,8 +47,6 @@ class CandidatoDAO {
     static void atualizaCandidato() {
         Candidato candidato = new Candidato()
 
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
         print "Digite o nome do candidato que deseja atualizar: "
         def nome = System.in.newReader().readLine()
 
@@ -56,6 +56,8 @@ class CandidatoDAO {
         candidato.descricaoPessoal = System.in.newReader().readLine()
         print "Digite a nova senha da candidato: "
         candidato.senha = System.in.newReader().readLine()
+
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         def sqlUpdate = "UPDATE candidato SET email = $candidato.email, descricaoPessoal = $candidato.descricaoPessoal, senha = $candidato.senha  WHERE nome = $nome"
 
@@ -70,10 +72,10 @@ class CandidatoDAO {
 
     static void deletaCandidato() {
 
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
         print "Digite o nome do candidato que deseja remover: "
         def nome = System.in.newReader().readLine()
+
+        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
 
         def sqlDelete = "DELETE FROM candidato WHERE nome = $nome"
 
@@ -87,7 +89,6 @@ class CandidatoDAO {
     }
 
     static void listaCandidatos() {
-
 
         println()
         println 'Lista de Candidatos'
