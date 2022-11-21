@@ -1,84 +1,91 @@
 package model.DAO
 
 import model.Classes.Competencia
-import groovy.sql.Sql
+import model.Classes.ConnectionFactory
 
+import java.sql.Connection
+import java.sql.PreparedStatement
+import java.sql.ResultSet
 import java.sql.SQLException
 
 class CompetenciaDAO {
 
-    static void adicionaCompetencia() {
+    Connection connection
 
-        Competencia competencia = new Competencia()
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
-        print "Digite o nome da competencia: "
-        competencia.descricao = System.in.newReader().readLine()
-
-        def sqlInsert = "INSERT INTO competencia(descricao) VALUES ($competencia.descricao)"
-
-        try {
-            sql.execute(sqlInsert)
-            println("Competência adicionada")
-        } catch (SQLException ex) {
-            println("Erro ao adicionar competência " + ex)
-        }
-        sql.close()
+    CompetenciaDAO() {
+        this.connection = new ConnectionFactory().getConnection()
     }
 
-    static void atualizaCompetencia() {
+    void adiciona(Competencia competencia) {
 
-        Competencia competencia = new Competencia()
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
-        print "Digite o nome da competência que deseja atualizar: "
-        def nome = System.in.newReader().readLine()
-
-        print "Digite o novo nome da competência: "
-        competencia.descricao = System.in.newReader().readLine()
-
-        def sqlUpdate = "UPDATE competencia SET descricao= $competencia.descricao WHERE ID = $nome"
+        def sql = "INSERT INTO competencia(descricao) VALUES (?)"
 
         try {
-            sql.execute(sqlUpdate)
-            println("Competência atualizada")
+            PreparedStatement stmt = connection.prepareStatement(sql)
+
+            stmt.setString(1, competencia.getDescricao())
+
+            stmt.execute()
+            stmt.close()
+
         } catch (SQLException ex) {
-            println("Erro ao atualizar competência" + ex)
+            throw new Exception(ex)
         }
-        sql.close()
     }
 
-    static void deletaCompetencia() {
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
-        print "Digite o nome da competência que deseja remover: "
-        def nome = System.in.newReader().readLine()
-
-        def sqlDelete = "DELETE FROM competencia WHERE ID = $nome"
+    void atualiza(Competencia competencia) {
+        def sql = "UPDATE competencia SET descricao= ? WHERE ID = ?"
 
         try {
-            sql.execute(sqlDelete)
-            println("Competência removida")
+            PreparedStatement stmt = connection.prepareStatement(sql)
+
+            stmt.setString(1, competencia.getDescricao())
+
+            stmt.execute()
+            stmt.close()
+
         } catch (SQLException ex) {
-            println("Erro ao remover competência" + ex)
+            throw new Exception(ex)
         }
-        sql.close()
     }
 
-    static void listaCompetencias() {
+    void remove(Competencia competencia) {
+        def sql = "DELETE FROM competencia WHERE id = ?"
 
-        println()
-        println 'Lista de Competencias'
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql)
 
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+            stmt.setInt(1, competencia.getId())
 
-        sql.eachRow("SELECT * FROM competencia") { rs ->
-            println "Descrição: " + (rs.descricao)
-            println()
+            stmt.execute()
+            stmt.close()
+
+        } catch (SQLException ex) {
+            throw new Exception(ex)
         }
-        sql.close()
+    }
+
+    List<Competencia> listar() {
+        def sql = "SELECT * FROM competencia"
+
+        try {
+            List<Competencia> competencias = new ArrayList<Competencia>()
+            PreparedStatement stmt = connection.prepareStatement(sql)
+            ResultSet rs = stmt.executeQuery()
+
+            while(rs.next()) {
+                Competencia competencia = new Competencia()
+
+                competencia.setId(rs.getInt("id"))
+                competencia.setDescricao(rs.getString("descricao"))
+
+                competencias.add(competencia)
+            }
+            rs.close()
+            stmt.close()
+            return competencias
+        } catch (SQLException ex) {
+            throw new Exception(ex)
+        }
     }
 }

@@ -1,8 +1,9 @@
 package model.Classes
 
 class Vaga {
+    int id
     String nome
     String descricao
     String localVaga
-    String idEmpresa
+    int idEmpresa
 }

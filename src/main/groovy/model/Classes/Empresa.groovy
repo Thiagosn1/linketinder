@@ -1,9 +1,10 @@
 package model.Classes
 
 class Empresa {
+    int id
     String nome
     String cnpj
-    String email
+    String emailCorporativo
     String pais
     String descricao
     String cep

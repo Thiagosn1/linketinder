@@ -1,98 +1,98 @@
 package model.DAO
 
-import groovy.sql.Sql
+import model.Classes.ConnectionFactory
 import model.Classes.Vaga
 
+import java.sql.Connection
+import java.sql.PreparedStatement
+import java.sql.ResultSet
 import java.sql.SQLException
 
 class VagaDAO {
 
-    static void adicionaVaga() {
+    Connection connection
 
-        Vaga vaga = new Vaga()
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
-        print "Digite o nome da vaga: "
-        vaga.nome = System.in.newReader().readLine()
-        print "Digite a descrição da vaga: "
-        vaga.descricao = System.in.newReader().readLine()
-        print "Digite o local da vaga: "
-        vaga.localVaga = System.in.newReader().readLine()
-        print "Digite o id da empresa: "
-        vaga.idEmpresa = System.in.newReader().readLine()
-
-        def sqlInsert = "INSERT INTO vaga(nome,descricao, localvaga, idempresa) VALUES ($vaga.nome,$vaga.descricao, $vaga.localVaga, $vaga.idEmpresa)"
-
-        try {
-            sql.execute(sqlInsert)
-            println("Vaga adicionada")
-        } catch(SQLException ex) {
-            println("Erro ao adicionar vaga " + ex)
-        }
-        sql.close()
+    VagaDAO() {
+        this.connection = new ConnectionFactory().getConnection()
     }
 
-    static void atualizaVaga() {
-
-        Vaga vaga = new Vaga()
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
-        print "Digite o nome da vaga que deseja atualizar: "
-        def nome = System.in.newReader().readLine()
-
-        println()
-
-        print "Digite o novo nome da Vaga: "
-        vaga.nome = System.in.newReader().readLine()
-        print "Digite a nova descrição da vaga: "
-        vaga.descricao = System.in.newReader().readLine()
-        print "Digite o novo local da vaga: "
-        vaga.localVaga = System.in.newReader().readLine()
-
-        def sqlUpdate = "UPDATE vaga SET nome = $vaga.nome, descricao = $vaga.descricao, localVaga = $vaga.localVaga WHERE nome = $nome"
+    void adiciona(Vaga vaga) {
+        def sql = "INSERT INTO vaga(nome,descricao, localvaga, idempresa) VALUES (?, ?, ?, ?)"
 
         try {
-            sql.execute(sqlUpdate)
-            println("Vaga atualizada")
-        } catch(SQLException ex) {
-            println("Erro ao atualizar vaga " + ex)
+            PreparedStatement stmt = connection.prepareStatement(sql)
+
+            stmt.setString(1, vaga.getNome())
+            stmt.setString(2, vaga.getDescricao())
+            stmt.setString(3, vaga.getLocalVaga())
+            stmt.setInt(4, vaga.getIdEmpresa())
+
+            stmt.execute()
+            stmt.close()
+
+        } catch (SQLException ex) {
+            throw new Exception(ex)
         }
-        sql.close()
     }
 
-    static void deletaVaga() {
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
-        print "Digite o nome da vaga que deseja remover: "
-        def nome = System.in.newReader().readLine()
-
-        def sqlDelete = "DELETE FROM vaga WHERE ID = $nome"
+    void atualiza(Vaga vaga) {
+        def sql = "UPDATE vaga SET nome = ?, descricao = ?, localVaga = ? WHERE id = ?"
 
         try {
-            sql.execute(sqlDelete)
-            println("Vaga removida")
-        } catch(SQLException ex) {
-            println("Erro ao remover vaga " + ex)
+            PreparedStatement stmt = connection.prepareStatement(sql)
+
+            stmt.setString(1, vaga.getNome())
+            stmt.setString(2, vaga.getDescricao())
+            stmt.setString(3, vaga.getLocalVaga())
+            stmt.setInt(4, vaga.getId())
+
+            stmt.execute()
+            stmt.close()
+
+        } catch (SQLException ex) {
+            throw new Exception(ex)
         }
-        sql.close()
     }
 
-    static void listaVagas() {
+    void remove(Vaga vaga) {
 
-        println()
-        println 'Lista de Vagas'
+        def sql = "DELETE FROM vaga WHERE id = ?"
 
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql)
 
-        sql.eachRow("SELECT * FROM vaga") { rs ->
-            println "Nome: " + (rs.descricao)
-            println "Descrição: " + (rs.descricao)
-            println "Local da Vaga: " + (rs.localVaga)
-            println()
+            stmt.setInt(1, vaga.getId())
+
+            stmt.execute()
+            stmt.close()
+
+        } catch (SQLException ex) {
+            throw new Exception(ex)
         }
-        sql.close()
+    }
+
+    List<Vaga> listar() {
+        def sql = "SELECT * FROM vaga"
+
+        try {
+            List<Vaga> vagas = new ArrayList<Vaga>()
+            PreparedStatement stmt = connection.prepareStatement(sql)
+            ResultSet rs = stmt.executeQuery()
+
+            while(rs.next()) {
+                Vaga vaga = new Vaga()
+
+                vaga.setNome(rs.getString("nome"))
+                vaga.setLocalVaga(rs.getString("localVaga"))
+                vaga.setDescricao(rs.getString("descricao"))
+
+                vagas.add(vaga)
+            }
+            rs.close()
+            stmt.close()
+            return vagas
+        } catch (SQLException ex) {
+            throw new Exception(ex)
+        }
     }
 }

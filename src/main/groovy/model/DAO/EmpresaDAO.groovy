@@ -1,102 +1,103 @@
 package model.DAO
 
+import model.Classes.ConnectionFactory
 import model.Classes.Empresa
-import groovy.sql.Sql
 
+import java.sql.Connection
+import java.sql.PreparedStatement
+import java.sql.ResultSet
 import java.sql.SQLException
 
 class EmpresaDAO {
 
-    static void adicionaEmpresa() {
+    Connection connection
 
-        Empresa empresa = new Empresa()
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
-        print "Digite o nome da empresa: "
-        empresa.nome = System.in.newReader().readLine()
-        print "Digite o CNPJ da empresa: "
-        empresa.cnpj = System.in.newReader().readLine()
-        print "Digite o email da empresa: "
-        empresa.email = System.in.newReader().readLine()
-        print "Digite o país da empresa: "
-        empresa.pais = System.in.newReader().readLine()
-        print "Digite o cep da empresa: "
-        empresa.cep = System.in.newReader().readLine()
-        print "Digite a descricao da empresa: "
-        empresa.descricao = System.in.newReader().readLine()
-        print "Digite a senha da empresa: "
-        empresa.senha = System.in.newReader().readLine()
-
-        def sqlInsert = "INSERT INTO empresa(nome, cnpj, emailCorporativo, pais, cep, descricao, senha) VALUES ($empresa.nome, $empresa.cnpj, $empresa.email, $empresa.pais, $empresa.cep, $empresa.descricao, $empresa.senha)"
-
-        try {
-            sql.execute(sqlInsert)
-            println("Empresa adicionada")
-        } catch (SQLException ex) {
-            println("Erro ao adicionar empresa" + ex)
-        }
-        sql.close()
+    EmpresaDAO() {
+        this.connection = new ConnectionFactory().getConnection()
     }
 
-    static void atualizaEmpresa() {
-        Empresa empresa = new Empresa()
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
-        print "Digite o nome da empresa que deseja atualizar: "
-        def nome = System.in.newReader().readLine()
-
-        print "Digite o novo nome da empresa: "
-        empresa.nome = System.in.newReader().readLine()
-        print "Digite o novo email da empresa: "
-        empresa.email = System.in.newReader().readLine()
-        print "Digite a senha da empresa: "
-        empresa.senha = System.in.newReader().readLine()
-
-        def sqlUpdate = "UPDATE empresa SET nome= $empresa.nome, emailcorporativo = $empresa.email, senha = $empresa.senha WHERE nome = $nome"
+    void adiciona(Empresa empresa) {
+        def sql = "INSERT INTO empresa(nome, cnpj, emailCorporativo, pais, cep, descricao, senha) VALUES (?, ?, ?, ?, ?, ?, ?)"
 
         try {
-            sql.execute(sqlUpdate)
-            println("Empresa atualizada")
+            PreparedStatement stmt = connection.prepareStatement(sql)
+
+            stmt.setString(1, empresa.getNome())
+            stmt.setString(2, empresa.getEmailCorporativo())
+            stmt.setString(3, empresa.getPais())
+            stmt.setString(4, empresa.getCep())
+            stmt.setString(5, empresa.getDescricao())
+            stmt.setString(6, empresa.getSenha())
+
+            stmt.execute()
+            stmt.close()
+
         } catch (SQLException ex) {
-            println("Erro ao atualizar empresa " + ex)
+            throw new Exception(ex)
         }
-        sql.close()
     }
 
-    static void deletaEmpresa() {
-
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
-
-        print "Digite o nome da empresa que deseja remover: "
-        def nome = System.in.newReader().readLine()
-
-        def sqlDelete = "DELETE FROM empresa WHERE nome = $nome"
+    void atualiza(Empresa empresa) {
+        def sql = "UPDATE empresa SET email = ?, pais = ?, cep = ?, descricaoPessoal = ?, senha = ?  WHERE id = ?"
 
         try {
-            sql.execute(sqlDelete)
-            println("Empresa removida")
+            PreparedStatement stmt = connection.prepareStatement(sql)
+
+            stmt.setString(1, empresa.getNome())
+            stmt.setString(2, empresa.getEmailCorporativo())
+            stmt.setString(3, empresa.getPais())
+            stmt.setString(4, empresa.getCep())
+            stmt.setString(5, empresa.getDescricao())
+            stmt.setString(6, empresa.getSenha())
+            stmt.setInt(6, empresa.getId())
+
+            stmt.execute()
+            stmt.close()
+
         } catch (SQLException ex) {
-            println("Erro ao remover empresa " + ex)
+            throw new Exception(ex)
         }
-        sql.close()
     }
 
-    static void listaEmpresas() {
+    void remove(Empresa empresa) {
+        def sql = "DELETE FROM empresa WHERE id = ?"
 
-        println()
-        println 'Lista de Empresas'
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql)
 
-        def sql = Sql.newInstance('jdbc:postgresql://localhost:5432/linketinder', 'thiago', '123456789', 'org.postgresql.Driver')
+            stmt.setInt(1, empresa.getId())
 
-        sql.eachRow("SELECT * FROM empresa") { rs ->
-            println "Nome: " + (rs.nome)
-            println "Descrição: " + (rs.descricao)
-            println "País: " + (rs.pais)
-            println("Competências: ")
-            println()
+            stmt.execute()
+            stmt.close()
+
+        } catch (SQLException ex) {
+            throw new Exception(ex)
         }
-        sql.close()
+    }
+
+    List<Empresa> listar() {
+        def sql = "SELECT * FROM empresa"
+
+        try {
+            List<Empresa> empresas = new ArrayList<Empresa>()
+            PreparedStatement stmt = connection.prepareStatement(sql)
+            ResultSet rs = stmt.executeQuery()
+
+            while(rs.next()) {
+                Empresa empresa = new Empresa()
+
+                empresa.setId(rs.getInt("id"))
+                empresa.setNome(rs.getString("nome"))
+                empresa.setPais(rs.getString("pais"))
+                empresa.setDescricao(rs.getString("descricao"))
+
+                empresas.add(empresa)
+            }
+            rs.close()
+            stmt.close()
+            return empresas
+        } catch (SQLException ex) {
+            throw new Exception(ex)
+        }
     }
 }

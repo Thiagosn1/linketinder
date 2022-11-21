@@ -1,6 +1,7 @@
 package model.Classes
 
 class Candidato {
+    int id
     String nome
     String sobrenome
     String dt_nasc
